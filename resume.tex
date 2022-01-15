@@ -1,0 +1,108 @@
+\documentclass[11pt,legalpaper,sans, colorlinks, linkcolor=blue]{moderncv}
+
+\moderncvcolor{blue}
+\moderncvstyle{banking}
+
+
+\usepackage[scale=0.86, top=1.2cm, bottom=1.2cm, left=1.2cm, right=1.2cm]{geometry}
+\recomputelengths
+
+\usepackage[pro]{fontawesome5}
+
+\usepackage{fontspec}
+
+\setsansfont[Ligatures=TeX, Numbers=OldStyle]{Heliotrope 4 Tab}
+
+\firstname{Harish}
+\familyname{Tummalacherla}
+
+\title{Resume}
+\address{Software Engineer}{}
+\email{hello@harisht.me}
+\homepage{harisht.me}{harisht.me}
+\github{harishneit}{github.com/harishneit}
+\linkedin{tharish}{in.linkedin.com/in/tharish}
+
+
+\begin{document}
+
+\makecvtitle
+
+\vspace{-12 mm}
+
+\section{Summary}
+
+\small{I am polyglot Software Engineer experienced in leading teams to ship complex systems in fast paced environments. I am particularly interested in buildings systems that improve people's lives with an emphasis on reliability, resilience, correctness \& performance at scale.}
+
+\section{Education}
+
+\cventry{}{}{Indian Institute of Technology Bombay}{B. Tech, Computer Science \& Engineering}{}{}
+\vspace{-4.5 mm}
+\cvitem{\small{Key Courses}}{\small{Web Search \& Data Mining, Distributed Systems, Advanced Databases, Functional Programming and Performance Theory.}\normalsize{}}
+\cvdoubleitem{Scores}{127\textsuperscript{th} at IIT-JEE \& 459\textsuperscript{th} at AIEEE}{Scholarships}{CBSE \& IIT Bombay heritage fund scholarships}
+
+
+\section{Skills}
+
+\cvdoubleitem{Proficient}{C++, Java \& Python }{Intermediate}{Rust, Scala, PlusCal, SQL \& Shell Scripting}
+\cvdoubleitem{Systems}{Spark, Hadoop, Trino \& Tensorflow}{Tools}{Git, CMake, Cargo, Gradle \& SBT}
+\cvitem{Specialties}{Distributed Systems, Databases, Performance, Big Data, Compilers  \& Machine Learning }
+
+% \section{Interests \& Expertise}
+% \begin{itemize}
+% \item experienced in leading small teams \& mentoring team members, contributing to technology \& process initiatives.
+% \item in-depth knowledge of multiple programming languages, programming paradigms \& industry best practices in back-end systems.
+% \item experience building systems from scratch \& improving existing systems through systematic architectural \& performance improvements.
+% \end{itemize}
+
+\section{Experience}
+
+\cventry{Jan, 2019 -- Preset}{Software Engineer, Amazon Web Services}{Amazon}{Santa Clara, CA}{}{}\normalsize\vspace{-2mm}
+\begin{itemize}
+\item designed portions of the \href{https://docs.aws.amazon.com/timestream/latest/developerguide/reference.html}{query language} for \href{https://aws.amazon.com/timestream/}{Timestream} \& lead it\'s overall implementation. this involved heavily extending parser, optimizer, codegen \& IO subsystems of \href{https://trino.io}{Trino} to deliver \href{https://aws.amazon.com/timestream/}{Timestream\'s} custom timeseries extensions to SQL language.
+\item designed \& lead the implementation of \href{https://aws.amazon.com/sagemaker/edge/}{SageMaker Edge}. this involved building new model server from scratch using GRPC \& shared memory to deliver a very low latency machine learning model inference server for various cpu architectures \& OS\'s.
+\item \textbf{current}: lead engineer for \href{https://docs.aws.amazon.com/sagemaker/latest/dg/training-compiler.html}{SageMaker Training Compiler}, owns distributed training \& overall release processes for the team.
+\end{itemize}
+
+\cventry{Feb, 2017 -- Dec, 2018}{Software Engineer, A9 Advertising}{Amazon}{Bangalore, India}{}{}\normalsize\vspace{-2mm}
+\begin{itemize}
+\item designed \& implemented large scale log aggregation pipelines for clicks \& impressions streams to power offline robot detection pipelines. improved the efficiency of offline data pipelines by \textbf{2x} \& detection time by \textbf{4hrs} \& reduced TCO by \textbf{\$1M/yr}.
+\item owned the performance \& reliability for the offline data processing pipelines. lead the multiple performance \& reliability initiatives to scale the team\'s systems to handler \textbf{4x} steady state traffic and \textbf{8x} peak traffic while improving overall reliability
+\end{itemize}
+
+
+\cventry{Feb, 2016 -- Feb, 2017}{Lead Engineer, Search Team}{Grofers}{Gurgaon, India}{}{}\normalsize\vspace{-2mm}
+\begin{itemize}
+\item lead the teams responsible for catalouge, product search \& product recommendations APIs powering Grofers app \& website.
+\item designed \& lead implementation of services to power purchase recommendations based on product \& user purchase history.
+\item designed \& implemented data pipeline to perform analysis \& indexing tasks on datasets on S3 \& Redshift using Apache Spark.
+\item lead multiple performance initiatives like adopting \texttt{HTTP2}, switching \texttt{WebP} \& scaling elasticsearch to handle\textbf{10x} app traffic.
+\end{itemize}
+
+\cventry{Feb, 2015 -- Feb, 2016}{Member of Technical Staff, Android Team}{\textsc{Adobe}}{Bengaluru, India}{}{}\normalsize\vspace{-2mm}
+\begin{itemize}
+\item \faicon{android}\href{https://play.google.com/store/apps/details?id=com.adobe.creativeapps.shape}{\hspace{1mm}Adobe Shape}: designed overall application architecture, implemented the base UI components \& build infrastructure.
+\item \faicon{android}\href{https://play.google.com/store/apps/details?id=com.adobe.creativeapps.gather}{\hspace{1mm}Adobe Capture}: designed \& implemented the raster to vector conversion, vector editor \& vector sterilizer components.
+\item worked extensively on optimizing C++ code, data passing via JNI \& fixing GC pauses \& concurrent and parallel programming.
+\item contributed to overall team effectiveness by mentoring team members, helping with code reviews, improving build performance by 10x, setting up CI using Jenkins, internal maven repository \& setting up static analysis as a part of the CI.
+
+\end{itemize}
+
+\cventry{Nov, 2013 -- Jan, 2015}{Sr. Software Engineer, Intelligence \& Platform teams}{\textsc{iam+}}{Remote}{}{}\normalsize{}\vspace{-2mm}
+\begin{itemize}
+\item built a voice assistant for smart-watch for performing basic tasks as composition of \texttt{FSM}s using \texttt{Akka} \& parsing using \texttt{ANTLR}.
+\item worked on adopting \& tuning location services, package manager and network manager android frameworks for the watch.
+\item built a maps app using \texttt{ESRI SDK}, app for controlling keynote and built the authentication UX for social apps on the watch.
+\end{itemize}
+
+\cventry{\small{July, 2012 -- October, 2013}}{\small{Software Engineer, R\&D Team}}{Global Analytics}{Chennai, India}{}{}\normalsize{}
+\vspace{-2mm}
+\begin{itemize}
+	\item rewrote internal ETL DSL interpreter to be data parallel by modeling computation as a DAG improved performance by 25x.
+	\item improved the accuracy of credit risk models using PCR \& PLS Regression\texttt{(5\%)} and ensembling using Random forests\texttt{(8\%)}.
+\end{itemize}
+
+% \cventry{\small{May, 2011 -- July, 2011}}{\small{Software Development Intern, Vertical Intent Search Team}}{Yahoo!}{Bengaluru, India}{}{}\normalsize{}
+% I was offered an internship with Yahoo's search team upon my success at their HackU hackathon. I worked on building question answering engine prototype, where I built the query parser using Stanford NLP and query execution module on top of \texttt{Neo4J}.
+
+\end{document}
