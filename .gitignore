@@ -1,4 +1,11 @@
 *.aux
+*.gz
 *.log
 *.out
 *.pdf
+*.fdb_latexmk
+*.fls
+*.xdv
+.DS_Store
+.claude/
+CLAUDE.md

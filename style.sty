@@ -1,0 +1,542 @@
+%% start of file `style.sty'.
+%% Copyright 2006-2012 Xavier Danaux (xdanaux@gmail.com).
+%% Copyright 2026 Harīṣh Tummalachērla.
+%% Derived from moderncvstylebanking.sty v1.2.0 by Xavier Danaux.
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License version 1.3c,
+%% available at http://www.latex-project.org/lppl/.
+
+
+%-------------------------------------------------------------------------------
+%                identification
+%-------------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/02/17 v1.0.0 resume layout and style macros]
+
+
+%-------------------------------------------------------------------------------
+%                required packages
+%-------------------------------------------------------------------------------
+\RequirePackage{tikz}
+
+
+%-------------------------------------------------------------------------------
+%                overall style definition
+%-------------------------------------------------------------------------------
+% fonts — Heliotrope loaded via fonts.sty
+
+% Phosphor icon inline command (font loaded in fonts.sty)
+% Default: renders at current font size
+\newcommand{\phicon}[1]{{\PhosphorFont\char"#1\relax}}
+% Sized variant for contact line (addressfont is \small ~ 9.5pt)
+\newcommand{\phiconcontact}[1]{\raisebox{-0.06ex}{\fontsize{8}{8}\selectfont\phicon{#1}}}
+% Sized variant for section headers (match HelioCaps small-cap x-height)
+\newcommand{\phiconsection}[1]{\raisebox{0.05ex}{\fontsize{8.5}{8.5}\selectfont\phicon{#1}}}
+% Sized variant for inline project icons (subordinate to body text)
+\newcommand{\phiconinline}[1]{\raisebox{-0.06ex}{\fontsize{8}{8}\selectfont\phicon{#1}}}
+
+% symbols
+\renewcommand*{\mobilesymbol}{\phicon{E45A}~}   % phone
+\renewcommand*{\phonesymbol}{\phicon{E45A}~}     % phone
+\renewcommand*{\faxsymbol}{\phicon{E218}~}       % envelope-simple
+\renewcommand*{\emailsymbol}{\phicon{E218}~}     % envelope-simple
+\renewcommand*{\homepagesymbol}{\phicon{E288}~}  % globe
+
+% commands
+\newcommand*{\maketitlesymbol}{%
+    {\hspace{0.9em}{\color{color2}\textperiodcentered}\hspace{0.9em}}}% middle dot separator
+%   internal command to add an element to the footer
+%   it collects the elements in a temporary box, and checks when to flush the box
+\newsavebox{\maketitlebox}%
+\newsavebox{\maketitletempbox}%
+\newlength{\maketitlewidth}%
+\newlength{\maketitleboxwidth}%
+\newif\if@firstmaketitleelement\@firstmaketitleelementtrue%
+%   adds an element to the maketitle, separated by maketitlesymbol
+%   usage: \addtomaketitle[maketitlesymbol]{element}
+\newcommand*{\addtomaketitle}[2][\maketitlesymbol]{%
+  \if@firstmaketitleelement%
+    \savebox{\maketitletempbox}{\usebox{\maketitlebox}#2}%
+  \else%
+    \savebox{\maketitletempbox}{\usebox{\maketitlebox}#1#2}\fi%
+  \settowidth{\maketitleboxwidth}{\usebox{\maketitletempbox}}%
+  \ifnum\maketitleboxwidth<\maketitlewidth%
+    \savebox{\maketitlebox}{\usebox{\maketitletempbox}}%
+    \@firstmaketitleelementfalse%
+  \else%
+    \flushmaketitle{}\\%
+    \savebox{\maketitlebox}{#2}%
+    \savebox{\maketitletempbox}{#2}%
+    \settowidth{\maketitleboxwidth}{\usebox{\maketitlebox}}%
+    \@firstmaketitleelementfalse\fi}
+%   internal command to flush the maketitle
+\newcommand*{\flushmaketitle}{%
+  \strut\usebox{\maketitlebox}%
+  \savebox{\maketitlebox}{}%
+  \savebox{\maketitletempbox}{}%
+  \setlength{\maketitleboxwidth}{0pt}}
+\renewcommand*{\maketitle}{%
+  \begin{center}%
+    \namestyle{\@firstname~\@familyname}%
+    \ifthenelse{\isundefined{\@addressstreet}}{}{\\[0.3em]\titlestyle{\@addressstreet}}%
+    \\[0.4em]%
+    {\addressfont\color{color2}%
+      \ifthenelse{\isundefined{\@email}}{}{{\phiconcontact{E218}\,\emaillink{\@email}}}%
+      \ifthenelse{\isundefined{\@homepage}}{}{%
+        \maketitlesymbol%
+        \ifthenelse{\equal{\@homepagetitle}{}}%
+          {{\phiconcontact{E288}\,\httplink{\@homepage}}}%
+          {{\phiconcontact{E288}\,\httplink[\@homepagetitle]{\@homepage}}}}%
+      \ifthenelse{\isundefined{\@github}}{}{%
+        \maketitlesymbol%
+        \ifthenelse{\equal{\@githuburl}{}}%
+          {{\phiconcontact{E576}\,\httplink{\@github}}}%
+          {{\phiconcontact{E576}\,\httplink[\@github]{\@githuburl}}}}%
+      \ifthenelse{\isundefined{\@linkedin}}{}{%
+        \maketitlesymbol%
+        \ifthenelse{\equal{\@linkedinurl}{}}%
+          {{\phiconcontact{E2EE}\,\httplink{\@linkedin}}}%
+          {{\phiconcontact{E2EE}\,\httplink[\@linkedin]{\@linkedinurl}}}}%
+    }%
+  \end{center}%
+  \vspace{0.4em}%
+  % Double-rule masthead: thin-thick bottom
+  \noindent\leavevmode\vbox{%
+    {\color{color1}\hrule height 0.4pt}%
+    \vskip2pt%
+    {\color{color1}\hrule height 1.2pt}%
+  }\par\vspace{0.2em}}
+
+
+%-------------------------------------------------------------------------------
+%                resume style definition
+%-------------------------------------------------------------------------------
+% fonts
+\renewcommand*{\namefont}{\huge\upshape}
+\renewcommand*{\titlefont}{\large\upshape}
+\renewcommand*{\addressfont}{\small\upshape}
+\renewcommand*{\quotefont}{\large\slshape}
+\renewcommand*{\sectionfont}{\normalsize\upshape}
+\renewcommand*{\subsectionfont}{\large\upshape\fontseries{sb}\selectfont}
+\renewcommand*{\hintfont}{\bfseries}
+
+% styles
+\renewcommand*{\namestyle}[1]{{\namefont{\HelioBlack\addfontfeature{LetterSpace=4}\textcolor{color0}{#1}}}}
+\renewcommand*{\titlestyle}[1]{{\titlefont{\HelioBook\textcolor{color2}{#1}}}}
+\renewcommand*{\addressstyle}[1]{{\addressfont{\HelioBook\textcolor{color2}{#1}}}}
+\renewcommand*{\quotestyle}[1]{{\quotefont\textcolor{color1}{#1}}}
+\renewcommand*{\sectionstyle}[1]{{\sectionfont{\HelioCaps\textcolor{color1}{#1}}}}
+\renewcommand*{\subsectionstyle}[1]{{\subsectionfont\textcolor{color1}{#1}}}
+\renewcommand*{\hintstyle}[1]{{\hintfont\textcolor{color0}{#1}}}
+
+% crimson square bullet
+\renewcommand{\labelitemi}{\strut\textcolor{color1}{\raisebox{0.25ex}{\rule{0.28em}{0.28em}}}}
+
+% lengths
+\newlength{\quotewidth}
+\newlength{\hintscolumnwidth}
+\setlength{\hintscolumnwidth}{0.3\textwidth}%
+\newlength{\separatorcolumnwidth}
+\setlength{\separatorcolumnwidth}{0.025\textwidth}%
+\newlength{\maincolumnwidth}
+\newlength{\doubleitemcolumnwidth}
+\newlength{\listitemsymbolwidth}
+\settowidth{\listitemsymbolwidth}{\listitemsymbol}
+\newlength{\listitemmaincolumnwidth}
+\newlength{\listdoubleitemmaincolumnwidth}
+
+% commands
+\renewcommand*{\recomputecvlengths}{%
+  \setlength{\quotewidth}{0.65\textwidth}%
+  % main lenghts
+  \setlength{\maincolumnwidth}{\textwidth}%
+  % listitem lengths
+  \setlength{\listitemmaincolumnwidth}{\maincolumnwidth-\listitemsymbolwidth}%
+  % doubleitem lengths
+  \setlength{\doubleitemcolumnwidth}{\maincolumnwidth-\separatorcolumnwidth}%
+  \setlength{\doubleitemcolumnwidth}{0.5\doubleitemcolumnwidth}%
+  % listdoubleitem lengths
+  \setlength{\listdoubleitemmaincolumnwidth}{\maincolumnwidth-\listitemsymbolwidth-\separatorcolumnwidth-\listitemsymbolwidth}%
+  \setlength{\listdoubleitemmaincolumnwidth}{0.5\listdoubleitemmaincolumnwidth}%
+  % fancyhdr lengths
+  \renewcommand{\headwidth}{\textwidth}%
+  % regular lengths
+  \setlength{\parskip}{0\p@}}
+
+% Editorial footer — crimson rule + centered page numbers
+\AtEndPreamble{%
+  \AtBeginDocument{%
+    \fancypagestyle{plain}{%
+      \fancyhf{}%
+      \renewcommand{\headrulewidth}{0pt}%
+      \renewcommand{\footrulewidth}{0pt}%
+      \fancyfoot[C]{\parbox{\textwidth}{%
+        \centering%
+        {\color{color1}\rule{\textwidth}{0.4pt}}\par\vskip 3pt%
+        {\HelioBook\small\color{color2}– \thepage\ –}%
+      }}%
+    }%
+    \pagestyle{plain}%
+  }%
+}
+
+\renewcommand*{\makecvtitle}{%
+  % recompute lengths (in case we are switching from letter to resume, or vice versa)
+  \recomputecvlengths%
+  \maketitle%
+  % optional quote
+  \ifthenelse{\isundefined{\@quote}}%
+    {}%
+    {{\centering\begin{minipage}{\quotewidth}\centering\quotestyle{\@quote}\end{minipage}\\[1em]}}%
+  \par}% to avoid weird spacing bug at the first section if no blank line is left after \maketitle}
+
+\renewcommand*{\section}[2][]{%
+  \par\addvspace{1.5ex}%
+  \phantomsection{}%
+  \addcontentsline{toc}{section}{#2}%
+  {\setlength{\fboxsep}{3pt}%
+    \noindent\colorbox{color1!5}{%
+      \makebox[\dimexpr\textwidth-2\fboxsep\relax][l]{%
+        {\color{color1}\rule[-0.08ex]{2.5pt}{1.1em}}\hspace{0.5em}%
+        \ifthenelse{\equal{#1}{}}{}{{\color{color1}\phiconsection{#1}}\hspace{0.35em}}%
+        \sectionstyle{#2}%
+      }%
+    }%
+  }%
+  \par\nobreak\addvspace{1ex}\@afterheading}
+
+\newcommand{\subsectionfill}{\xleaders\hbox to 0.35em{\scriptsize.}\hfill}% different subsectionfills will not be perfectly aligned, but remaining space at the end of the fill will be distributed evenly between leaders, so it will be barely visible
+\renewcommand*{\subsection}[1]{%
+  \par\addvspace{1ex}%
+  \phantomsection{}%
+  \addcontentsline{toc}{subsection}{#1}%
+  \strut\subsectionstyle{#1}{\color{color1}{\subsectionfill}}%
+  \par\nobreak\addvspace{0.5ex}\@afterheading}
+
+\renewcommand*{\cvitem}[3][.25em]{%
+  \ifthenelse{\equal{#2}{}}{}{\hintstyle{#2}: }{#3}%
+  \par\addvspace{#1}}
+
+\renewcommand*{\cvdoubleitem}[5][.25em]{%
+  \begin{minipage}[t]{\doubleitemcolumnwidth}\hintstyle{#2}: #3\end{minipage}%
+  \hfill% fill of \separatorcolumnwidth
+  \begin{minipage}[t]{\doubleitemcolumnwidth}\ifthenelse{\equal{#4}{}}{}{\hintstyle{#4}: }#5\end{minipage}%
+  \par\addvspace{#1}}
+
+\renewcommand*{\cvlistitem}[2][.25em]{%
+  \listitemsymbol\begin{minipage}[t]{\listitemmaincolumnwidth}#2\end{minipage}%
+  \par\addvspace{#1}}
+
+\renewcommand*{\cvlistdoubleitem}[3][.25em]{%
+  \cvitem[#1]{}{\listitemsymbol\begin{minipage}[t]{\listdoubleitemmaincolumnwidth}#2\end{minipage}%
+  \hfill% fill of \separatorcolumnwidth
+  \ifthenelse{\equal{#3}{}}%
+    {}%
+    {\listitemsymbol\begin{minipage}[t]{\listdoubleitemmaincolumnwidth}#3\end{minipage}}}}
+
+\renewcommand*{\cventry}[7][.35em]{%
+  \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}%
+    \ifthenelse{\equal{#4}{}}{%
+      {\itshape #3\ifthenelse{\equal{#6}{}}{}{, #6}} &
+        {\HelioBook\small\color{color2}#5\ifthenelse{\equal{#2}{}}{}{\enspace\textperiodcentered\enspace #2}}\\%
+    }{%
+      {\bfseries #4} & {} \\%
+      {\itshape #3\ifthenelse{\equal{#6}{}}{}{, #6}} &
+        {\HelioBook\small\color{color2}#5\ifthenelse{\equal{#2}{}}{}{\enspace\textperiodcentered\enspace #2}}\\%
+    }%
+  \end{tabular*}%
+  \ifx&#7&%
+    \else{\\\vbox{\small#7}}\fi%
+  \par\addvspace{#1}}
+
+\newbox{\cvitemwithcommentmainbox}
+\newlength{\cvitemwithcommentmainlength}
+\newlength{\cvitemwithcommentcommentlength}
+\renewcommand*{\cvitemwithcomment}[4][.25em]{%
+  \savebox{\cvitemwithcommentmainbox}{\ifthenelse{\equal{#2}{}}{}{\hintstyle{#2}: }#3}%
+  \setlength{\cvitemwithcommentmainlength}{\widthof{\usebox{\cvitemwithcommentmainbox}}}%
+  \setlength{\cvitemwithcommentcommentlength}{\maincolumnwidth-\separatorcolumnwidth-\cvitemwithcommentmainlength}%
+  \begin{minipage}[t]{\cvitemwithcommentmainlength}\ifthenelse{\equal{#2}{}}{}{\hintstyle{#2}: }#3\end{minipage}%
+  \hfill% fill of \separatorcolumnwidth
+  \begin{minipage}[t]{\cvitemwithcommentcommentlength}\raggedleft\small\itshape#4\end{minipage}%
+  \par\addvspace{#1}}
+
+\renewenvironment{thebibliography}[1]%
+  {%
+    \bibliographyhead{\refname}%
+%    \small%
+    \begin{list}{\bibliographyitemlabel}%
+      {%
+        \setlength{\topsep}{0pt}%
+        \setlength{\labelwidth}{0pt}%
+        \setlength{\labelsep}{0pt}%
+        \leftmargin\labelwidth%
+        \advance\leftmargin\labelsep%
+        \@openbib@code%
+        \usecounter{enumiv}%
+        \let\p@enumiv\@empty%
+        \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+        \sloppy\clubpenalty4000\widowpenalty4000%
+  }%
+  {%
+    \def\@noitemerr{\@latex@warning{Empty `thebibliography' environment}}%
+    \end{list}%
+  }
+
+
+% editorial callout (manual drop cap inside tinted box)
+% #1 = drop cap letter, #2 = rest of first word (small caps), #3 = body
+\newcommand{\editorialcallout}[3]{%
+  \par\noindent
+  \hspace{0.6em}%
+  \begin{minipage}{\dimexpr\textwidth-1.2em\relax}%
+    \vspace{0.4em}%
+    \setlength{\parindent}{0pt}%
+    \hangindent=3.4em\hangafter=-3\relax
+    \noindent
+    \llap{\smash{\raisebox{-2\baselineskip}[0pt][0pt]{%
+      \makebox[3.4em][c]{\HelioBlackDisplay\fontsize{50}{50}\selectfont\color{color1}#1}%
+    }}}%
+    {\bfseries\color{color0}#2}\space{\color{color0}#3}%
+    \vspace{0.4em}%
+  \end{minipage}%
+  \par}
+
+% employer header with crimson hairline underline + PDF bookmark
+\newcommand{\employerheader}[1]{%
+  \addvspace{1.2em}%
+  \phantomsection%
+  \pdfbookmark[2]{#1}{employer.\detokenize{#1}}%
+  \par\noindent{\bfseries\addfontfeature{LetterSpace=1} #1}%
+  \par\vspace{0.15em}%
+  {\color{color1!40}\hrule height 0.4pt}%
+  \nopagebreak[4]%
+  \par\vspace{0.5em}}
+
+% work mode label (Remote / Onsite) — crimson accent, upshape to cancel italic from cventry role
+\newcommand{\workmode}[1]{\enspace{\upshape\textcolor{color2}{\textperiodcentered\enspace{\footnotesize #1}}}}
+
+% multi-location separator (arrow between locations)
+\newcommand{\locand}{\,{\color{color2}{\footnotesize\textrightarrow}}\,}
+
+% job role entry — purpose-built for Experience section
+% \cvrole[spacing]{dates}{title}{team}{location}{workmode}
+\newcommand*{\cvrole}[6][.35em]{%
+  \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}%
+    {\itshape #3\ifthenelse{\equal{#6}{}}{}{%
+      \workmode{#6}}%
+      \ifx&#4&\else{\enspace{\upshape\textcolor{color2}{\textperiodcentered\enspace{\HelioBook\footnotesize #4}}}}\fi} &
+      {\HelioBook\small\color{color2}#5\ifthenelse{\equal{#2}{}}{}{\enspace\textperiodcentered\enspace #2}}\\%
+  \end{tabular*}%
+  \par\addvspace{#1}}
+
+% role context callout — full-bleed tinted card with crimson left accent
+% Sets the team/project context before contribution bullets.
+% Empty argument suppresses the block entirely (zero extra space).
+\newcommand{\rolecontext}[1]{%
+  \ifx&#1&\else
+  \par\addvspace{0.25em}%
+  \noindent%
+  \begin{tikzpicture}
+    \node[
+      inner xsep=0.8em, inner ysep=0.5em,
+      fill=color1!6,
+      text width={\dimexpr\textwidth-1.6em-3pt},
+      anchor=west,
+      xshift=3pt
+    ] (ctx) {{\HelioBook\small\itshape\color{color0}#1}};
+    \fill[color1] ([xshift=-3pt]ctx.north west) rectangle (ctx.south west);
+  \end{tikzpicture}%
+  \par\addvspace{0.35em}%
+  \fi}
+
+% skill tags (middot-separated text)
+\newcommand{\skilltag}[1]{#1}
+\newcommand{\skillsep}{\,{\color{color2}\textperiodcentered}\,}
+
+% skill category (small-caps crimson label + tags)
+\newcommand{\skillcategory}[2]{%
+  \par\noindent{\HelioCaps\small\textcolor{color1}{#1}:}\hspace{0.5em}#2\par\addvspace{0.5em}}
+
+
+% --- Earlier Experience ---
+
+\newcommand{\earlierheader}{%
+  \addvspace{1.0em}%
+  \par\noindent{\HelioBook\small\textcolor{color2}{Earlier Experience}}%
+  \par\vspace{0.15em}%
+  {\color{color2!40}\hrule height 0.3pt}%
+  \nopagebreak[4]%
+  \par\vspace{0.4em}}
+
+\newcommand*{\earlierrole}[4]{%
+  \begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}}%
+    {\itshape #2}%
+      \enspace{\upshape\textcolor{color2}{\textperiodcentered\enspace{\HelioBook\footnotesize #3}}}%
+      \enspace{\upshape\textcolor{color2}{\textperiodcentered\enspace{\HelioBook\footnotesize #4}}} &
+    {\HelioBook\small\color{color2}#1}\\%
+  \end{tabular*}%
+  \par\addvspace{0.15em}}
+
+
+% --- Open Source card layout ---
+
+% Card geometry (parameterized columns)
+\newlength{\oscardpad}\setlength{\oscardpad}{0.55em}%
+\newlength{\oscardgap}\setlength{\oscardgap}{0.5em}%
+\newlength{\oscardbar}\setlength{\oscardbar}{1.5pt}%
+\newlength{\oscardinner}%
+\newcount\oscardcols
+% \setoscardcols{N} — configure card layout for N columns
+% per card = bar + pad + inner + pad; N cards + (N-1) gaps = textwidth
+\newcommand{\setoscardcols}[1]{%
+  \oscardcols=#1\relax
+  % step-by-step: avoids dimexpr parsing issues with nested \numexpr
+  \setlength{\oscardinner}{\textwidth}%
+  \addtolength{\oscardinner}{-\numexpr\oscardcols-1\relax\oscardgap}%
+  \setlength{\oscardinner}{\dimexpr\oscardinner/\oscardcols\relax}%
+  \addtolength{\oscardinner}{-2\oscardpad}%
+  \addtolength{\oscardinner}{-\oscardbar}%
+}
+\AtBeginDocument{\setoscardcols{3}}% deferred: geometry must set \textwidth first
+
+% Card content: #1=name, #2=github-url, #3=page-url, #4=description, #5=tech stack
+\newcommand{\oscardcontent}[5]{%
+  \vspace{0.5em}%
+  \begin{tabular*}{\oscardinner}{@{}l@{\extracolsep{\fill}}r@{}}%
+    {\TriplicateCode\fontsize{10.5}{12}\selectfont\textcolor{color1}{\href{#2}{#1}}} &
+    {\textcolor{color1}{\href{#3}{\raisebox{-0.08ex}{\fontsize{9}{9}\selectfont\phicon{E2C6}}}}\kern0.4em
+     \textcolor{color1}{\href{#2}{\raisebox{-0.08ex}{\fontsize{9}{9}\selectfont\phicon{E278}}}}}%
+  \end{tabular*}%
+  \par\vspace{0.25em}%
+  {\raggedright\HelioBook\small\color{color0} #4\par}%
+  \vfill
+  \vspace{0.4em}%
+  {\color{color1!30}\hrule height 0.4pt}%
+  \par\vspace{0.3em}%
+  {\HelioBook\footnotesize\textcolor{color2}{#5}\par}%
+  \vspace{0.5em}\mbox{}%
+}
+
+% Render one card: #1=height (empty=natural), #2..#6=content args
+\newsavebox{\osctmpbox}%
+\newcommand{\oscard}[6]{%
+  {\sbox{\osctmpbox}{%
+     \if\relax\detokenize{#1}\relax
+       \begin{minipage}[t]{\oscardinner}%
+     \else
+       \begin{minipage}[t][#1]{\oscardinner}%
+     \fi
+       \oscardcontent{#2}{#3}{#4}{#5}{#6}%
+     \end{minipage}%
+   }%
+   \textcolor{color1}{\rule[\dimexpr-\dp\osctmpbox]{\oscardbar}{\dimexpr\ht\osctmpbox+\dp\osctmpbox}}%
+   \kern\oscardpad
+   \usebox{\osctmpbox}%
+   \kern\oscardpad
+  }%
+}
+
+% --- Card collection & auto-render system ---
+\newcount\oscardcount\oscardcount=0\relax
+\newcount\osidx
+\newlength{\osmaxht}\newlength{\ostmpht}\newlength{\oscardht}%
+
+% \addoscard{name}{github-url}{page-url}{description}{tech stack}
+\newcommand{\addoscard}[5]{%
+  \global\advance\oscardcount by 1\relax
+  \expandafter\gdef\csname osc@\the\oscardcount @a\endcsname{#1}%
+  \expandafter\gdef\csname osc@\the\oscardcount @b\endcsname{#2}%
+  \expandafter\gdef\csname osc@\the\oscardcount @c\endcsname{#3}%
+  \expandafter\gdef\csname osc@\the\oscardcount @d\endcsname{#4}%
+  \expandafter\gdef\csname osc@\the\oscardcount @e\endcsname{#5}%
+}
+
+% internal: measure card N into \osctmpbox, update \osmaxht
+\newcommand{\os@measure}{%
+  \advance\osidx by 1\relax
+  \ifnum\osidx>\oscardcount\else
+    \sbox{\osctmpbox}{\oscard{}%
+      {\csname osc@\the\osidx @a\endcsname}%
+      {\csname osc@\the\osidx @b\endcsname}%
+      {\csname osc@\the\osidx @c\endcsname}%
+      {\csname osc@\the\osidx @d\endcsname}%
+      {\csname osc@\the\osidx @e\endcsname}}%
+    \setlength{\ostmpht}{\dimexpr\ht\osctmpbox+\dp\osctmpbox\relax}%
+    \ifdim\ostmpht>\osmaxht\setlength{\osmaxht}{\ostmpht}\fi
+    \os@measure
+  \fi
+}
+
+% internal: render card N at \oscardht, with gap before if N>1
+\newcommand{\os@render}{%
+  \advance\osidx by 1\relax
+  \ifnum\osidx>\oscardcount\else
+    \ifnum\osidx>1\hspace{\oscardgap}\fi
+    \oscard{\oscardht}%
+      {\csname osc@\the\osidx @a\endcsname}%
+      {\csname osc@\the\osidx @b\endcsname}%
+      {\csname osc@\the\osidx @c\endcsname}%
+      {\csname osc@\the\osidx @d\endcsname}%
+      {\csname osc@\the\osidx @e\endcsname}%
+    \os@render
+  \fi
+}
+
+% \renderoscards — auto-compute columns, match heights, render all cards
+\newcommand{\renderoscards}{%
+  \setoscardcols{\the\oscardcount}%
+  \setlength{\osmaxht}{0pt}%
+  \osidx=0\relax\os@measure
+  \setlength{\oscardht}{\dimexpr\osmaxht-2\oscardpad\relax}%
+  \noindent\osidx=0\relax\os@render
+  \par\addvspace{0.3ex}%
+  \global\oscardcount=0\relax
+}
+
+%-------------------------------------------------------------------------------
+%                letter style definition
+%-------------------------------------------------------------------------------
+% commands
+\renewcommand*{\recomputeletterlengths}{
+  \recomputecvlengths%
+  \setlength{\parskip}{6\p@}}
+
+\renewcommand*{\makelettertitle}{%
+  % recompute lengths (in case we are switching from letter to resume, or vice versa)
+  \recomputeletterlengths%
+  % sender block
+  \maketitle%
+  \par%
+   % recipient block
+  \begin{minipage}[t]{.5\textwidth}
+    \raggedright%
+    \addressfont%
+    {\bfseries\upshape\@recipientname}\\%
+    \@recipientaddress%
+  \end{minipage}
+  % date
+  \hfill % US style
+%  \\[1em] % UK style
+  \@date\\[2em]% US informal style: "April 6, 2006"; UK formal style: "05/04/2006"
+  % opening
+  \raggedright%
+  \@opening\\[1.5em]%
+  % ensure no extra spacing after \makelettertitle due to a possible blank line
+%  \ignorespacesafterend% not working
+  \hspace{0pt}\par\vspace{-\baselineskip}\vspace{-\parskip}}
+
+\renewcommand*{\makeletterclosing}{
+  \@closing\\[3em]%
+  {\bfseries \@firstname~\@familyname}%
+  \ifthenelse{\isundefined{\@enclosure}}{}{%
+    \\%
+    \vfill%
+    {\color{color2}\itshape\enclname: \@enclosure}}}
+
+
+\endinput
+
+
+%% end of file `style.sty'.

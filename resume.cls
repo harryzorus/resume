@@ -1,16 +1,18 @@
-%% start of file `moderncv.cls'.
+%% start of file `resume.cls'.
 %% Copyright 2006-2012 Xavier Danaux (xdanaux@gmail.com).
-%
-% This work may be distributed and/or modified under the
-% conditions of the LaTeX Project Public License version 1.3c,
-% available at http://www.latex-project.org/lppl/.
+%% Copyright 2026 Harīṣh Tummalachērla.
+%% Derived from moderncv.cls v1.2.0 by Xavier Danaux.
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License version 1.3c,
+%% available at http://www.latex-project.org/lppl/.
 
 
 %-------------------------------------------------------------------------------
 %                identification
 %-------------------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{moderncv}[2012/10/31 v1.2.0 modern curriculum vitae and letter document class]
+\ProvidesClass{resume}[2026/02/17 v1.0.0 resume document class]
 
 
 %-------------------------------------------------------------------------------
@@ -71,53 +73,21 @@
 %-------------------------------------------------------------------------------
 % \AtEndPreamble hook (loading etoolbox instead of defining the macro, as to avoid incompatibilities with etoolbox (and packages relying on it) defining the macro too)
 \RequirePackage{etoolbox}
-%\let\@endpreamblehook\@empty
-%\def\AtEndPreamble{\g@addto@macro\@endpreamblehook}
-%\let\document@original\document
-%\def\document{\endgroup\@endpreamblehook\begingroup\document@original}
 
 % if... then... else... constructs
 \RequirePackage{ifthen}
-% TODO: move to xifthen and \isempty{<arg>} instead of \equal{<arg>}{}
 
 % color
 \RequirePackage{xcolor}
 
 % font loading
-%\usepackage{ifxetex,ifluatex}
-%\newif\ifxetexorluatex
-%\ifxetex
-%  \xetexorluatextrue
-%\else
-%  \ifluatex
-%    \xetexorluatextrue
-%  \else
-%    \xetexorluatexfalse
-%  \fi
-%\fi
-% automatic loading of latin modern fonts
-%\ifxetexorluatex
-%  \RequirePackage{fontspec}
-%  \defaultfontfeatures{Ligatures=TeX}
-%  \RequirePackage{unicode-math}
-%  \setmainfont{Latin Modern}
-%  \setsansfont{Latin Modern Sans}
-%  \setmathfont{Latin Modern Math}
-%\else
   \RequirePackage[T1]{fontenc}
   \IfFileExists{lmodern.sty}%
     {\RequirePackage{lmodern}}%
     {}
-%\fi
 
-% MarVoSym font for symbols
-%\RequirePackage{marvosym}
+% MarVoSym removed — Phosphor icons used instead
 \newcommand*{\marvosymbol}[1]{}
-%\ifxetexorluatex
-%  \renewcommand*{\marvosymbol}[1]{{\fontspec{MarVoSym}\char#1}}
-%\else
-  \renewcommand*{\marvosymbol}[1]{{\fontfamily{mvs}\fontencoding{U}\fontseries{m}\fontshape{n}\selectfont\char#1}}
-%\fi
 
 % hyper links (hyperref is loaded at the end of the preamble to pass options required by loaded packages such as CJK)
 \RequirePackage{url}
@@ -130,9 +100,11 @@
     baseurl       = http://,
     pdfborder     = 0 0 0,
     pdfpagemode   = UseNone,% do not show thumbnails or bookmarks on opening
+    colorlinks    = true,
+    urlcolor      = color3,
+    linkcolor     = color3,
     pdfstartpage  = 1,
-    pdfcreator    = {\LaTeX{} with 'moderncv' package},
-%    pdfproducer   = {\LaTeX{}},% will/should be set automatically to the correct TeX engine used
+    pdfcreator    = {\LaTeX{} with 'resume' class},
     bookmarksopen = true,
     bookmarksdepth= 2,% to show sections and subsections
     pdfauthor     = {\@firstname{}~\@familyname{}},
@@ -170,13 +142,9 @@
 
 % advanced command arguments (LaTeX 3)
 \RequirePackage{xargs}
-% TODO (?): replace all \newcommand by \NewDocumentCommand
 
 % micro-typography (e.g., character protrusion, font expansion, hyphenatable letterspacing)
 \RequirePackage{microtype}
-
-% compatibility package with older versions of moderncv
-\RequirePackageWithOptions{moderncvcompatibility}
 
 
 %-------------------------------------------------------------------------------
@@ -195,11 +163,6 @@
 \setlength\arrayrulewidth{.4\p@}
 \setlength\doublerulesep{2\p@}
 
-% not set on purpose
-%\setlength\arraycolsep{5\p@}
-%\setlength\tabcolsep{6\p@}
-%\setlength\tabbingsep{\labelsep}
-
 \raggedbottom
 \onecolumn
 
@@ -211,14 +174,15 @@
 \newcommand*{\firstname}[1]{\def\@firstname{#1}}
 \newcommand*{\familyname}[1]{\def\@familyname{#1}}
 \renewcommand*{\title}[1]{\def\@title{#1}}
+\title{}% prevent undefined \@title warnings
 \newcommand*{\address}[2]{\def\@addressstreet{#1}\def\@addresscity{#2}}
 \newcommand*{\mobile}[1]{\def\@mobile{#1}}
 \newcommand*{\phone}[1]{\def\@phone{#1}}
 \newcommand*{\fax}[1]{\def\@fax{#1}}
 \newcommand*{\email}[1]{\def\@email{#1}}
 \newcommand*{\homepage}[2]{\def\@homepage{#1}\def\@homepagetitle{#2}}
-\newcommand*{\linkedin}[2]{\def\@linkedin{#1}\def\@username{#2}}
-\newcommand*{\github}[2]{\def\@github{#1}\def\@username{#2}}
+\newcommand*{\linkedin}[2]{\def\@linkedin{#1}\def\@linkedinurl{#2}}
+\newcommand*{\github}[2]{\def\@github{#1}\def\@githuburl{#2}}
 
 % colors
 \definecolor{color0}{rgb}{0,0,0}% main default color, normally left to black
@@ -228,7 +192,7 @@
 
 % symbols
 %   itemize labels (the struts were added to correct inter-item spacing (works for single line items, until a solution is found for multi-line ones...)
-\newcommand*{\labelitemi}{\strut\textcolor{color1}{\marvosymbol{123}}}% equivalent to \Neutral from marvosym package; alternative: \fontencoding{U}\fontfamily{ding}\selectfont\tiny\symbol{'102}
+\newcommand*{\labelitemi}{\strut\textcolor{color1}{\small---}}
 \newcommand*{\labelitemii}{\strut\textcolor{color1}{\large\bfseries-}}
 \newcommand*{\labelitemiii}{\strut\textcolor{color1}{\rmfamily\textperiodcentered}}% alternative: \textasteriskcentered; the \rmfamily is required to force Latin Modern fonts when using sans serif, as OMS/lmss/m/n is not defined and gets substituted by OMS/cmsy/m/n
 \newcommand*{\labelitemiv}{\labelitemiii}
@@ -257,13 +221,8 @@
 % usage: \makefooter
 \newcommand*{\makefooter}{}%
 
-% loads a style scheme
-\newcommand*{\moderncvstyle}[1]{
-  \RequirePackage{moderncvstyle#1}}
-  
-% loads a color scheme
-\newcommand*{\moderncvcolor}[1]{
-  \RequirePackage{moderncvcolor#1}}
+% \maketitle stub — renewed by style
+\newcommand*{\maketitle}{}
 
 % recomputes all automatic lengths
 \newcommand*{\recomputelengths}{\recomputecvlengths}
@@ -367,8 +326,8 @@
 % usage: \httplink[optional text]{link}
 \newcommand*{\httplink}[2][]{%
   \ifthenelse{\equal{#1}{}}%
-    {\href{http://#2}{#2}}%
-    {\href{http://#2}{#1}}}
+    {\href{https://#2}{#2}}%
+    {\href{https://#2}{#1}}}
 
 % makes an email hyperlink
 % usage: \emaillink[optional text]{link}
@@ -382,7 +341,6 @@
 \setlength{\bibindent}{1.5em}
 % bibliography item label
 \newcommand*{\bibliographyitemlabel}{}% use \@biblabel{\arabic{enumiv}} for BibTeX labels
-%\newif\if@multibibfirstbib\@multibibfirstbibfalse
 % bibliography head (section, etc}, depending on whether multibib is used
 \newcommand*{\bibliographyhead}[1]{\section{#1}}
 \AtEndPreamble{\@ifpackageloaded{multibib}{\renewcommand*{\bibliographyhead}[1]{\subsection{#1}}}{}}
@@ -392,7 +350,7 @@
 \let\@openbib@code\@empty
 
 % itemize, enumerate and description environment
-\setlength{\leftmargini}   {1em}
+\setlength{\leftmargini}   {0.8em}
 \leftmargin\leftmargini
 \setlength{\leftmarginii}  {\leftmargini}
 \setlength{\leftmarginiii} {\leftmargini}
@@ -420,7 +378,7 @@
   \setlength{\topsep}{0pt}%
   \setlength{\parsep}{0pt}%
   \setlength{\parskip}{0pt}%
-  \setlength{\itemsep}{0pt}}
+  \setlength{\itemsep}{2pt}}
 \renewcommand*{\enumhook}{\itemhook{}}
 \renewcommand*{\deschook}{\itemhook{}}
 
@@ -429,12 +387,6 @@
   January\or February\or March\or April\or May\or June\or
   July\or August\or September\or October\or November\or December\fi
   \space\number\day, \number\year}
-
-%\newcommand{\widthofautobox}[1]{%
-%  \widthof{\begin{tabular}{@{}l@{}}#1\end{tabular}}}
-
-%\newcommand{\autobox}[2][b]{%
-%  \parbox[#1]{\widthofautobox{#2}}{#2}}
 
 
 %-------------------------------------------------------------------------------
@@ -466,7 +418,14 @@
 \newcommand*{\makeletterclosing}{}
 
 
+%-------------------------------------------------------------------------------
+%                load color and style packages
+%-------------------------------------------------------------------------------
+\RequirePackage{colors}
+\RequirePackage{style}
+
+
 \endinput
 
 
-%% end of file `moderncv.cls'.
+%% end of file `resume.cls'.

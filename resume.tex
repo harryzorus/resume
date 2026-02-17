@@ -1,108 +1,160 @@
-\documentclass[11pt,legalpaper,sans, colorlinks, linkcolor=blue]{moderncv}
+\documentclass[11pt,letterpaper,sans]{resume}
 
-\moderncvcolor{blue}
-\moderncvstyle{banking}
-
-
-\usepackage[scale=0.86, top=1.2cm, bottom=1.2cm, left=1.2cm, right=1.2cm]{geometry}
+\usepackage[top=0.7in, bottom=0.7in, left=0.75in, right=0.75in]{geometry}
 \recomputelengths
 
-\usepackage[pro]{fontawesome5}
+\usepackage{multicol}
 
-\usepackage{fontspec}
+\hyphenation{Spe-cial-iz-es}
+\clubpenalty=10000
+\widowpenalty=10000
 
-\setsansfont[Ligatures=TeX, Numbers=OldStyle]{Heliotrope 4 Tab}
+\usepackage{fonts}
 
-\firstname{Harish}
-\familyname{Tummalacherla}
+\firstname{Harī\texorpdfstring{\dotbelow{s}}{s}h}
+\familyname{Tummalachērla}
+\address{Software Engineer\enspace\textperiodcentered\enspace San Francisco, CA}{}
+\email{harry@harryzorus.xyz}
+\homepage{harryzorus.xyz}{harryzorus.xyz}
+\github{harryzorus}{github.com/harryzorus}
+\linkedin{harryzorus}{in.linkedin.com/in/harryzorus}
 
-\title{Resume}
-\address{Software Engineer}{}
-\email{hello@harisht.me}
-\homepage{harisht.me}{harisht.me}
-\github{harishneit}{github.com/harishneit}
-\linkedin{tharish}{in.linkedin.com/in/tharish}
-
+% PDF metadata and copyright
+\AtBeginDocument{%
+  \hypersetup{
+    pdfauthor   = {Harīṣh Tummalachērla},
+    pdftitle    = {Harīṣh Tummalachērla — Senior Software Engineer},
+    pdfsubject  = {Senior Software Engineer specializing in ML infrastructure, compilers, and distributed systems},
+    pdfkeywords = {senior software engineer, principal engineer, staff engineer, CTO,
+      machine learning infrastructure, ML systems, deep learning, LLM inference,
+      speculative decoding, model optimization, distributed training,
+      compilers, XLA, TVM, MLIR, CUDA, GPU optimization,
+      distributed systems, databases, query engines, time-series,
+      system architecture, technical leadership, team building,
+      C++, Rust, Python, Scala, Typescript,
+      AWS, SageMaker, cloud infrastructure,
+      vLLM, SGLang, TensorRT-LLM, PyTorch,
+      San Francisco, remote},
+    pdfcreator  = {XeLaTeX with resume.cls},
+    pdfproducer = {v1.0.0},
+  }%
+  \special{pdf:docinfo <<
+    /Copyright <FEFF0043006F0070007900720069006700680074002000320030003200360020004800610072012B1E630068002000540075006D006D0061006C00610063006801130072006C0061002E00200041006C006C0020007200690067006800740073002000720065007300650072007600650064002E>
+  >>}%
+}
 
 \begin{document}
 
 \makecvtitle
 
-\vspace{-12 mm}
+\section[E2C8]{Profile}
 
-\section{Summary}
+\editorialcallout{H}{arī\dotbelow{s}h}{has spent fourteen years building the hard systems from scratch and shipping them to production: compilers, query engines, databases, data pipelines, ML training \& serving infrastructure. Operates across the full range from technical strategy to hands-on execution: system architecture, team building, and growing engineers into independent technical leaders. Knows when to architect, when to write the code, and when to step back and let the team own it. Products and platforms behind hundreds of millions of dollars in annual revenue across Amazon, Adobe, and high-growth startups. \hyperref[sec:patents]{US patent} holder; published at \hyperref[sec:patents]{PRML 2023}.}
 
-\small{I am polyglot Software Engineer experienced in leading teams to ship complex systems in fast paced environments. I am particularly interested in buildings systems that improve people's lives with an emphasis on reliability, resilience, correctness \& performance at scale.}
+\section[E0EE]{Experience}
 
-\section{Education}
+\employerheader{Amazon Web Services}
 
-\cventry{}{}{Indian Institute of Technology Bombay}{B. Tech, Computer Science \& Engineering}{}{}
-\vspace{-4.5 mm}
-\cvitem{\small{Key Courses}}{\small{Web Search \& Data Mining, Distributed Systems, Advanced Databases, Functional Programming and Performance Theory.}\normalsize{}}
-\cvdoubleitem{Scores}{127\textsuperscript{th} at IIT-JEE \& 459\textsuperscript{th} at AIEEE}{Scholarships}{CBSE \& IIT Bombay heritage fund scholarships}
-
-
-\section{Skills}
-
-\cvdoubleitem{Proficient}{C++, Java \& Python }{Intermediate}{Rust, Scala, PlusCal, SQL \& Shell Scripting}
-\cvdoubleitem{Systems}{Spark, Hadoop, Trino \& Tensorflow}{Tools}{Git, CMake, Cargo, Gradle \& SBT}
-\cvitem{Specialties}{Distributed Systems, Databases, Performance, Big Data, Compilers  \& Machine Learning }
-
-% \section{Interests \& Expertise}
-% \begin{itemize}
-% \item experienced in leading small teams \& mentoring team members, contributing to technology \& process initiatives.
-% \item in-depth knowledge of multiple programming languages, programming paradigms \& industry best practices in back-end systems.
-% \item experience building systems from scratch \& improving existing systems through systematic architectural \& performance improvements.
-% \end{itemize}
-
-\section{Experience}
-
-\cventry{Jan, 2019 -- Preset}{Software Engineer, Amazon Web Services}{Amazon}{Santa Clara, CA}{}{}\normalsize\vspace{-2mm}
+\cvrole{Dec 2023 -- Present}{Senior Software Engineer}{SageMaker Inference}{Vancouver, BC\,/\,San Francisco, CA}{Remote}
+\rolecontext{Research engineer driving inference optimization strategy, shipping research bets with platform \& product teams.}
 \begin{itemize}
-\item designed portions of the \href{https://docs.aws.amazon.com/timestream/latest/developerguide/reference.html}{query language} for \href{https://aws.amazon.com/timestream/}{Timestream} \& lead it\'s overall implementation. this involved heavily extending parser, optimizer, codegen \& IO subsystems of \href{https://trino.io}{Trino} to deliver \href{https://aws.amazon.com/timestream/}{Timestream\'s} custom timeseries extensions to SQL language.
-\item designed \& lead the implementation of \href{https://aws.amazon.com/sagemaker/edge/}{SageMaker Edge}. this involved building new model server from scratch using GRPC \& shared memory to deliver a very low latency machine learning model inference server for various cpu architectures \& OS\'s.
-\item \textbf{current}: lead engineer for \href{https://docs.aws.amazon.com/sagemaker/latest/dg/training-compiler.html}{SageMaker Training Compiler}, owns distributed training \& overall release processes for the team.
+\item Owned the team's technical roadmap: balanced investment in speculative decoding, model streaming, and serving architecture, aligned platform and product teams to ship research outcomes as customer-facing workflows.
+\item Shipped \href{https://aws.amazon.com/blogs/machine-learning/achieve-up-to-2x-higher-throughput-while-reducing-costs-by-50-for-generative-ai-inference-on-amazon-sagemaker-with-the-new-inference-optimization-toolkit-part-1/}{speculative decoding} (\textbf{2x} throughput, \textbf{50\%} cost reduction), \href{https://aws.amazon.com/blogs/machine-learning/introducing-fast-model-loader-in-sagemaker-inference-accelerate-autoscaling-for-your-large-language-models-llms-part-1/}{fast model streaming} (\textbf{15x} faster loading), EFA-optimized collectives, and \href{https://aws.amazon.com/blogs/machine-learning/efficient-and-cost-effective-multi-tenant-lora-serving-with-amazon-sagemaker/}{multi-tenant LoRA serving}: hundreds of fine-tuned adapters on a single endpoint.
+\item Drove the team through high-stakes Llama 4 and DeepSeek model launches: delivered inference optimization making the serverless offering competitive with Together and Fireworks on key customer workloads.
+\item Currently leading research bets: transparent auto-tuning for inference configuration and continuous speculative decoding distillation, automating optimization and cutting draft model training cost at production scale.
 \end{itemize}
 
-\cventry{Feb, 2017 -- Dec, 2018}{Software Engineer, A9 Advertising}{Amazon}{Bangalore, India}{}{}\normalsize\vspace{-2mm}
+\cvrole{Jan 2020 -- Dec 2023}{Senior Software Engineer}{SageMaker Compilers}{San Francisco, CA}{Remote}
+\rolecontext{Led technical strategy for the deep learning compiler team: edge inference and GPU training optimization.}
 \begin{itemize}
-\item designed \& implemented large scale log aggregation pipelines for clicks \& impressions streams to power offline robot detection pipelines. improved the efficiency of offline data pipelines by \textbf{2x} \& detection time by \textbf{4hrs} \& reduced TCO by \textbf{\$1M/yr}.
-\item owned the performance \& reliability for the offline data processing pipelines. lead the multiple performance \& reliability initiatives to scale the team\'s systems to handler \textbf{4x} steady state traffic and \textbf{8x} peak traffic while improving overall reliability
+\item Designed and built \href{https://aws.amazon.com/sagemaker/edge/}{SageMaker Edge}: a TVM-based compiler and serving engine for vision models on edge devices, powering anomaly detection and RL pipelines with low-latency inference via GRPC and shared memory.
+\item Owned \href{https://docs.aws.amazon.com/sagemaker/latest/dg/training-compiler.html}{SageMaker Training Compiler}: built an XLA-based product for accelerating vision and language model training on GPU, led optimization of allreduce collectives and syncfree optimizers for distributed training.
+\item Delivered \textbf{50--80\%} training speedups across single-node and distributed workloads: built compiler caching and multi-threaded execution, drove customer adoption, and published results at \href{https://ieeexplore.ieee.org/document/10348258/}{IEEE PRML 2023}.
 \end{itemize}
 
-
-\cventry{Feb, 2016 -- Feb, 2017}{Lead Engineer, Search Team}{Grofers}{Gurgaon, India}{}{}\normalsize\vspace{-2mm}
+\cvrole{Jan 2019 -- Jan 2020}{Software Engineer}{AWS Timestream}{Seattle, WA}{Onsite}
+\rolecontext{Joined as founding engineer to design the query engine for AWS's new serverless time-series database.}
 \begin{itemize}
-\item lead the teams responsible for catalouge, product search \& product recommendations APIs powering Grofers app \& website.
-\item designed \& lead implementation of services to power purchase recommendations based on product \& user purchase history.
-\item designed \& implemented data pipeline to perform analysis \& indexing tasks on datasets on S3 \& Redshift using Apache Spark.
-\item lead multiple performance initiatives like adopting \texttt{HTTP2}, switching \texttt{WebP} \& scaling elasticsearch to handle\textbf{10x} app traffic.
+\item Built core \href{https://docs.aws.amazon.com/timestream/latest/developerguide/reference.html}{query language} extensions for \href{https://aws.amazon.com/timestream/}{Timestream}: extended the parser, optimizer, codegen, and IO subsystems of \href{https://trino.io}{Trino} for native time-series operations including interpolation, temporal joins, and tiered query routing.
+\item Drove storage team data layout and custom statistics design to meet query SLA goals: co-invented adaptive strategies across hot, warm, and cold tiers based on data temperature, resulting in \href{https://patents.google.com/patent/US11461347B1/en}{US Patent 11,461,347}.
+\item Owned service launch end-to-end: drove pricing and TCO modeling with product, established operational runbooks and on-call monitoring, and shipped \href{https://aws.amazon.com/timestream/}{Timestream} to general availability as a founding engineer.
 \end{itemize}
 
-\cventry{Feb, 2015 -- Feb, 2016}{Member of Technical Staff, Android Team}{\textsc{Adobe}}{Bengaluru, India}{}{}\normalsize\vspace{-2mm}
-\begin{itemize}
-\item \faicon{android}\href{https://play.google.com/store/apps/details?id=com.adobe.creativeapps.shape}{\hspace{1mm}Adobe Shape}: designed overall application architecture, implemented the base UI components \& build infrastructure.
-\item \faicon{android}\href{https://play.google.com/store/apps/details?id=com.adobe.creativeapps.gather}{\hspace{1mm}Adobe Capture}: designed \& implemented the raster to vector conversion, vector editor \& vector sterilizer components.
-\item worked extensively on optimizing C++ code, data passing via JNI \& fixing GC pauses \& concurrent and parallel programming.
-\item contributed to overall team effectiveness by mentoring team members, helping with code reviews, improving build performance by 10x, setting up CI using Jenkins, internal maven repository \& setting up static analysis as a part of the CI.
+\employerheader{A9.com (Amazon Advertising)}
 
+\cvrole{Feb 2017 -- Jan 2019}{Software Engineer}{Robot Detection}{Bengaluru, India}{Onsite}
+\rolecontext{Owned log aggregation across real-time scoring services and offline petabyte-scale pipelines for ad fraud detection.}
+\begin{itemize}
+\item Designed and built a unified log aggregation framework for click and impression scoring: lowered end-to-end latency while reducing the real-time service fleet by \textbf{4x}, enabling faster fraud signal iteration across the platform.
+\item Rearchitected offline petabyte-scale pipelines with custom Spark SQL optimization passes and Parquet layout tuning: improved pipeline efficiency by \textbf{6x}, accelerating downstream analytics and continuous model training.
+\item Architected tiered storage, compliance infrastructure, and continuous training pipelines: scaled these data engineering patterns across the organization, reducing annual compute and storage costs by \textbf{\$1.2M/yr}.
 \end{itemize}
 
-\cventry{Nov, 2013 -- Jan, 2015}{Sr. Software Engineer, Intelligence \& Platform teams}{\textsc{iam+}}{Remote}{}{}\normalsize{}\vspace{-2mm}
+\employerheader{Grofers}
+
+\cvrole{Feb 2016 -- Feb 2017}{Lead Engineer}{Search \& Discovery}{Gurgaon, India}{Onsite}
+\rolecontext{Joined as lead engineer to build search and recommendations, driving growth at a hyperlocal grocery platform.}
 \begin{itemize}
-\item built a voice assistant for smart-watch for performing basic tasks as composition of \texttt{FSM}s using \texttt{Akka} \& parsing using \texttt{ANTLR}.
-\item worked on adopting \& tuning location services, package manager and network manager android frameworks for the watch.
-\item built a maps app using \texttt{ESRI SDK}, app for controlling keynote and built the authentication UX for social apps on the watch.
+\item Owned catalogue, search, and recommendations across \textbf{2M} SKUs: shipped multilingual search in \textbf{6} languages and purchase recommendations with collaborative filtering and customer profiling, driving a \textbf{24\%} revenue uplift.
+\item Designed data logging and training pipeline architecture on Apache Spark: hardened Elasticsearch for production scale, powering the ML-driven recommendations and personalization engine that drove the revenue uplift.
+\item Scaled the platform through \textbf{10x} traffic growth: cut API latencies and asset loading times via \texttt{HTTP2} adoption and \texttt{WebP} image switching, sustaining performance and user engagement through the company's rapid expansion.
 \end{itemize}
 
-\cventry{\small{July, 2012 -- October, 2013}}{\small{Software Engineer, R\&D Team}}{Global Analytics}{Chennai, India}{}{}\normalsize{}
-\vspace{-2mm}
+\employerheader{Adobe}
+
+\cvrole{Feb 2015 -- Feb 2016}{Member of Technical Staff}{Android Apps}{Bengaluru, India}{Onsite}
+\rolecontext{Joined as lead developer to build Adobe's Android Capture Apps, driving Creative Cloud subscription growth.}
 \begin{itemize}
-	\item rewrote internal ETL DSL interpreter to be data parallel by modeling computation as a DAG improved performance by 25x.
-	\item improved the accuracy of credit risk models using PCR \& PLS Regression\texttt{(5\%)} and ensembling using Random forests\texttt{(8\%)}.
+\item Joined as lead developer on \href{https://play.google.com/store/apps/details?id=com.adobe.creativeapps.shape}{Adobe Shape}: architected the application and built the raster-to-vector pipeline and vector rendering engine, optimizing C++ \& JNI for GPU-accelerated graphics across diverse Android hardware.
+\item Led the unification of all mobile capture apps into \href{https://play.google.com/store/apps/details?id=com.adobe.creativeapps.gather}{Adobe Capture}: owned application architecture, drove native rendering performance, and mentored engineers through release. \href{https://blog.adobe.com/en/publish/2015/12/09/google-play-names-adobe-capture-cc-and-adobe-photoshop-lightroom-best-apps-of-2015}{Google Play Best App of 2015}.
 \end{itemize}
 
-% \cventry{\small{May, 2011 -- July, 2011}}{\small{Software Development Intern, Vertical Intent Search Team}}{Yahoo!}{Bengaluru, India}{}{}\normalsize{}
-% I was offered an internship with Yahoo's search team upon my success at their HackU hackathon. I worked on building question answering engine prototype, where I built the query parser using Stanford NLP and query execution module on top of \texttt{Neo4J}.
+\earlierheader
+\earlierrole{2013 -- 2015}{Sr.\ Software Engineer}{iam+}{built voice assistant for their Android based smartwatch}
+\earlierrole{2012 -- 2013}{Software Engineer}{Global Analytics}{built an ETL pipeline for training credit risk models with Hadoop}
+
+
+\section[E2DC]{Expertise}
+\skillcategory{Languages}{\skilltag{C++}\skillsep\skilltag{Rust}\skillsep\skilltag{Python}\skillsep\skilltag{Scala}\skillsep\skilltag{Typescript}}
+\skillcategory{Accelerated Computing}{\skilltag{CUDA}\skillsep\skilltag{Triton}\skillsep\skilltag{Mojo}\skillsep\skilltag{CUTLASS}\skillsep\skilltag{MLIR}}
+\skillcategory{AI/ML Systems}{\skilltag{vLLM}\skillsep\skilltag{SGLang}\skillsep\skilltag{TensorRT-LLM}\skillsep\skilltag{Distillation}\skillsep\skilltag{Reinforcement Learning}}
+\skillcategory{Databases \& Distributed Systems}{\skilltag{Spark}\skillsep\skilltag{PostgreSQL}\skillsep\skilltag{Query Engines}\skillsep\skilltag{Information Retrieval}}
+
+\section[E62C]{Education}
+
+\cventry{2008 -- 2013}{Bachelors of Technology, Computer Science \& Engineering}{Indian Institute of Technology Bombay}{Mumbai, India}{}{%
+  {\HelioBook\color{color2}%
+    IIT-JEE 127\textsuperscript{th}\skillsep
+    AIEEE 459\textsuperscript{th}\skillsep
+    CBSE \& IIT Bombay heritage fund scholarships}}
+
+\section[E1BC]{Open Source}
+
+\addoscard{Sorex}{https://github.com/harryzorus/sorex}{https://harryzorus.xyz/pack/sorex}%
+  {In-browser fuzzy search with substring matching, typo tolerance, and formally verified ranking.}%
+  {Rust\skillsep Typescript \skillsep Lean}
+\addoscard{Cantor}{https://github.com/harryzorus/cantor}{https://harryzorus.xyz/pack/cantor}%
+  {Batch inference engine for TTS models, maximizing throughput over latency in offline workloads.}%
+  {Python \skillsep Mojo}
+\addoscard{Lumen}{https://github.com/harryzorus/lumen}{https://harryzorus.xyz/pack/lumen}%
+  {Compressed Gaussian splat pipeline from drone footage for fast 3D rendering in the browser.}%
+  {Python \skillsep Mojo \skillsep Typescript}
+\renderoscards
+
+\section[E3AC]{Writing}
+\begin{multicols}{2}
+{\HelioCaps\small\textcolor{color1}{\raisebox{-0.06ex}{\fontsize{8}{8}\selectfont\phicon{E346}}\kern0.3em Articles}}\par\addvspace{0.4em}
+\cvitem{\href{https://harryzorus.xyz/posts/2026/01/lean-in}{Lean In When Code Becomes Cheap}}{AI-driven code generation shifts bottlenecks to context engineering and formal specifications for verified abstractions.}
+\cvitem{\href{https://harryzorus.xyz/posts/2026/01/eagle-speculative-decoding}{Eagle Speculative Decoding}}{Tree attention and KV cache juggling for speculative verification; compares vLLM, SGLang, TensorRT-LLM implementations.}
+\columnbreak
+{\HelioCaps\small\textcolor{color1}{\raisebox{-0.06ex}{\fontsize{8}{8}\selectfont\phicon{EDA0}}\kern0.3em Architecture}}\par\addvspace{0.4em}
+\cvitem{\href{https://harryzorus.xyz/pack/sorex/docs/architecture}{Sorex Architecture}}{Three-tier search with parallel build pipeline, formal Lean~4 verification, compact binary format, WASM runtime.}
+\cvitem{\href{https://harryzorus.xyz/pack/luemen/docs/architecture}{Lumen Architecture}}{End-to-end pipeline from drone footage to compressed Gaussian splats for browser-based 3D rendering.}
+\end{multicols}
+
+\section[E0A8]{Patents \& Publications}\label{sec:patents}
+
+\cvitem{\href{https://patents.google.com/patent/US11461347B1/en}{Adaptive Querying of Time-Series Data over Tiered Storage}}{US Patent 11,461,347: adaptive query strategies for time-series data across hot, warm, and cold storage tiers in distributed databases (Amazon Timestream).}
+\cvitem{\href{https://ieeexplore.ieee.org/document/10348258/}{Syncfree Optimizers and Compiler Improvements for Efficient Model Training}}{IEEE PRML 2023: syncfree optimizers, compiler caching, and multi-threaded execution; speedups over native and XLA baselines in PyTorch.}
 
 \end{document}

@@ -1,0 +1,83 @@
+%% start of file `fonts.sty'.
+%% Copyright 2026 Harīṣh Tummalachērla.
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License version 1.3c,
+%% available at http://www.latex-project.org/lppl/.
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fonts}[2026/02/17 v1.0.0 font definitions for resume]
+
+\RequirePackage{fontspec}
+
+% Main body font — Heliotrope 4 (Medium), bold remapped to 6 (Semibold)
+\setsansfont[
+  Path=fonts/otf/Heliotrope/,
+  Extension=.otf,
+  UprightFont=Heliotrope4TabRegular,
+  BoldFont=Heliotrope6TabRegular,
+  ItalicFont=Heliotrope4TabItalic,
+  BoldItalicFont=Heliotrope6TabItalic,
+  Ligatures=TeX,
+  Numbers=OldStyle
+]{Heliotrope4Tab}
+
+% Display font for name — Heliotrope 6 (Semibold) used because
+% Heliotrope 8 (Black) lacks ṣ (U+1E63) needed for name diacritics.
+% Heliotrope 6 at \huge provides a visually prominent name heading.
+\let\HelioBlack\bfseries
+
+% Display font — Heliotrope 8 (Black) for drop cap initial (ASCII only)
+\newfontfamily\HelioBlackDisplay[
+  Path=fonts/otf/Heliotrope/,
+  Extension=.otf,
+  Ligatures=TeX
+]{HeliotropeOT8Black}
+
+% Light font — Heliotrope 3 (Book) for dates/locations/subtitle
+\newfontfamily\HelioBook[
+  Path=fonts/otf/Heliotrope/,
+  Extension=.otf,
+  Ligatures=TeX,
+  Numbers=Lining
+]{Heliotrope3TabRegular}
+
+% Small caps — Heliotrope 6 Caps for section headers
+\newfontfamily\HelioCaps[
+  Path=fonts/otf/Heliotrope/,
+  Extension=.otf,
+  LetterSpace=6,
+  Ligatures=TeX
+]{Heliotrope6TabCapsRegular}
+
+% Small caps scaled to x-height — for drop cap lettrine text
+\newfontfamily\HelioSmallCaps[
+  Path=fonts/otf/Heliotrope/,
+  Extension=.otf,
+  LetterSpace=3,
+  Scale=0.83,
+  Ligatures=TeX
+]{Heliotrope6TabCapsRegular}
+
+% Monospace — Triplicate for code terms
+\newfontfamily\TriplicateCode[
+  Path=fonts/otf/Triplicate/,
+  Extension=.otf,
+  Scale=MatchLowercase
+]{TriplicateT4CodeRegular}
+
+% Override \texttt to use Triplicate
+\renewcommand{\texttt}[1]{{\TriplicateCode #1}}
+
+% Icon font — Phosphor Regular for UI icons
+\newfontfamily\PhosphorFont[
+  Path=fonts/ttf/Phosphor/,
+  Extension=.ttf
+]{Phosphor}
+
+% Synthetic dot-below accent (Heliotrope lacks U+1E63 and U+0323)
+\newcommand{\dotbelow}[1]{\setbox0=\hbox{#1}\rlap{\raise-.4ex\hbox to\wd0{\hss.\hss}}\box0}
+\AtBeginDocument{\pdfstringdefDisableCommands{\renewcommand{\dotbelow}[1]{#1}}}
+
+
+\endinput
